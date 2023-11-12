@@ -3,17 +3,26 @@ import os
 from datetime import datetime
 
 # Import test functions
-from tests.git_clone_test import git_clone_test
-from tests.git_status_test import git_status_test
-from tests.remove_repo_test import remove_repo_test
+from tests.test_git import test_git_clone, test_git_status, test_remove_repo
+from tests.test_unzip import test_unzip
+from tests.test_dd import test_dd
+from tests.test_fio import test_fio_write_throughput, test_fio_write_iops, test_fio_read_throughput, test_fio_read_iops
+
 
 # List of available test modules
 available_tests = {
-    'git-clone': git_clone_test,
-    'git-status': git_status_test,
-    'remove-repo': remove_repo_test,
+    'git-clone': test_git_clone,
+    'git-status': test_git_status,
+    'remove-repo': test_remove_repo,
+    'unzip': test_unzip,
+    'dd': test_dd,
+    'fio_write_throughput': test_fio_write_throughput,
+    'fio_write_iops': test_fio_write_iops,
+    'fio_read_throughput': test_fio_read_throughput,
+    'fio_read_iops': test_fio_read_iops,
     # Add other tests as needed
 }
+
 
 def run_test(test_name, storage_path):
     result = available_tests[test_name](storage_path)

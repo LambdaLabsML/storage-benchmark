@@ -26,19 +26,17 @@ available_tests = {
 def process_logs(log_folder_path):
     metrics = {}
 
-    for file in os.listdir(log_folder_path):
-        if file.endswith(".txt"):
-            log_file_path = os.path.join(log_folder_path, file)
-            test_name = file.split('-')[0]  # Extract test name from filename
+    for test in available_tests:
+        for file in os.listdir(log_folder_path):
+            if file.endswith(".txt"):
+                log_file_path = os.path.join(log_folder_path, file)
+                test_name = file.split('-')[0]  # Extract test name from filename
+                if test_name == test:
+                    metric = available_tests[test_name](log_file_path)
 
-            if test_name in available_tests:
-                metric = available_tests[test_name](log_file_path)
-
-                if test_name not in metrics:
-                    metrics[test_name] = []
-                metrics[test_name].append(metric)
-            else:
-                print(f"No parser available for test: {test_name}")
+                    if test_name not in metrics:
+                        metrics[test_name] = []
+                    metrics[test_name].append(metric)
 
     return metrics
 

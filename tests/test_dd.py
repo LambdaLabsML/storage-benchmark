@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import re
 
 def test_dd(storage_path):
     input_file = os.path.join(storage_path, 'train2017.zip')
@@ -21,3 +22,17 @@ def test_dd(storage_path):
     elapsed_time = time.time() - start_time
 
     return f"dd operation completed.\nElapsed Time: {elapsed_time:.2f} seconds\n{result.stdout}"
+
+
+def parse_dd(log_file_path):
+    print("parse_dd ...")
+    with open(log_file_path, 'r') as file:
+        log_content = file.read()
+
+    if 'dd' in log_file_path:
+        match = re.search(r"Elapsed Time: (\d+\.\d+) seconds", log_content)
+        if match:
+            print(match.group(1) + " seconds")
+            return match.group(1) + " seconds"
+
+    return "N/A"  # Return "N/A" if the metric can't be found or if it's an unhandled test

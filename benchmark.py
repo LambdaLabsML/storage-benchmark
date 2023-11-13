@@ -7,24 +7,26 @@ from tests.test_git import test_git_clone, test_git_status, test_remove_repo
 from tests.test_unzip import test_unzip
 from tests.test_dd import test_dd
 from tests.test_fio import test_fio_write_throughput, test_fio_write_iops, test_fio_read_throughput, test_fio_read_iops
-
+from tests.test_ml import test_ssd
 
 # List of available test modules
 available_tests = {
-    'git-clone': test_git_clone,
-    'git-status': test_git_status,
-    'remove-repo': test_remove_repo,
-    'unzip': test_unzip,
-    'dd': test_dd,
     'fio_write_throughput': test_fio_write_throughput,
     'fio_write_iops': test_fio_write_iops,
     'fio_read_throughput': test_fio_read_throughput,
     'fio_read_iops': test_fio_read_iops,
+    'git_clone': test_git_clone,
+    'git_status': test_git_status,
+    'remove_repo': test_remove_repo,
+    'unzip': test_unzip,
+    'dd': test_dd,
+    'ssd': test_ssd,
     # Add other tests as needed
 }
 
 
 def run_test(test_name, storage_path):
+    print(f"'{test_name}' running ...")
     result = available_tests[test_name](storage_path)
     log_file_name = f"{test_name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}.txt"
     log_path = os.path.join(storage_path, 'log', log_file_name)
@@ -34,6 +36,7 @@ def run_test(test_name, storage_path):
 
     with open(log_path, 'w') as file:
         file.write(result)
+    print(f"'{test_name}' finished.")
 
 def main():
     if len(sys.argv) < 2:

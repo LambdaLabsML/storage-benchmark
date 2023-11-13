@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import re
 
 def test_fio_write_throughput(storage_path):
     fio_dir = os.path.join(storage_path, "fiotest")
@@ -23,6 +24,20 @@ def test_fio_write_throughput(storage_path):
     return log_output
 
 
+def parse_fio_write_throughput(log_file_path):
+    print("parse_fio_write_throughput ...")
+    with open(log_file_path, 'r') as file:
+        log_content = file.read()
+
+    if 'fio_write_throughput' in log_file_path:
+        match = re.search(r"WRITE: bw=(\d+(\.\d+)?(MiB|GiB)/s)", log_content)
+        if match:
+            print(match.group(1))
+            return match.group(1)
+
+    return "N/A"  # Return "N/A" if the metric can't be found or if it's an unhandled test
+
+
 def test_fio_write_iops(storage_path):
     fio_dir = os.path.join(storage_path, "fiotest")
     os.makedirs(fio_dir, exist_ok=True)
@@ -43,6 +58,18 @@ def test_fio_write_iops(storage_path):
 
     return log_output
 
+def parse_fio_write_iops(log_file_path):
+    print("parse_fio_write_iops ...")
+    with open(log_file_path, 'r') as file:
+        log_content = file.read()
+
+    if 'fio_write_iops' in log_file_path:
+        match = re.search(r"WRITE: bw=(\d+(\.\d+)?(MiB|GiB)/s)", log_content)
+        if match:
+            print(match.group(1))
+            return match.group(1)
+
+    return "N/A"  # Return "N/A" if the metric can't be found or if it's an unhandled test
 
 def test_fio_read_throughput(storage_path):
     fio_dir = os.path.join(storage_path, "fiotest")
@@ -64,7 +91,18 @@ def test_fio_read_throughput(storage_path):
 
     return log_output
 
+def parse_fio_read_throughput(log_file_path):
+    print("parse_fio_read_throughput ...")
+    with open(log_file_path, 'r') as file:
+        log_content = file.read()
 
+    if 'fio_read_throughput' in log_file_path:
+        match = re.search(r"READ: bw=(\d+(\.\d+)?(MiB|GiB)/s)", log_content)
+        if match:
+            print(match.group(1))
+            return match.group(1)
+
+    return "N/A"  # Return "N/A" if the metric can't be found or if it's an unhandled test
 
 def test_fio_read_iops(storage_path):
     fio_dir = os.path.join(storage_path, "fiotest")
@@ -85,3 +123,16 @@ def test_fio_read_iops(storage_path):
     log_output = f"FIO Read IOPS Test Completed.\nElapsed Time: {elapsed_time:.2f} seconds\n{result.stdout}"
 
     return log_output
+
+def parse_fio_read_iops(log_file_path):
+    print("parse_fio_read_iops ...")
+    with open(log_file_path, 'r') as file:
+        log_content = file.read()
+
+    if 'fio_read_iops' in log_file_path:
+        match = re.search(r"READ: bw=(\d+(\.\d+)?(MiB|GiB)/s)", log_content)
+        if match:
+            print(match.group(1))
+            return match.group(1)
+
+    return "N/A"  # Return "N/A" if the metric can't be found or if it's an unhandled test

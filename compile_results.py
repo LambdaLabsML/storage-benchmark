@@ -1,6 +1,5 @@
 import os
 import csv
-import re
 import sys
 
 from tests.test_git import parse_git_clone, parse_git_status, parse_remove_repo

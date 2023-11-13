@@ -1,0 +1,2 @@
+fio_write_throughput,ssd,git_status,git_clone,dd,fio_read_iops,unzip,remove_repo,fio_write_iops,fio_read_throughput
+4154MiB/s,602.4033203125 FPS,0.40 seconds,10.43 seconds,13.62 seconds,308MiB/s,99.15 seconds,0.14 seconds,28.5MiB/s,12.3GiB/s
